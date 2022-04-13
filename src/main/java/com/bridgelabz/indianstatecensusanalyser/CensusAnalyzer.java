@@ -1,5 +1,4 @@
 package com.bridgelabz.indianstatecensusanalyser;
-
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 
@@ -32,4 +31,3 @@ public class CensusAnalyzer {
 
     }
 }
-
