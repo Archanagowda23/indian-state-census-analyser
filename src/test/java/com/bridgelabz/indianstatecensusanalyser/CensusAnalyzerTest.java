@@ -1,6 +1,5 @@
 package com.bridgelabz.indianstatecensusanalyser;
 
-
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
