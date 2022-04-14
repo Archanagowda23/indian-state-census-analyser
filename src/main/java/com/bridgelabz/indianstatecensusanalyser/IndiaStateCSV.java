@@ -14,5 +14,5 @@ public class IndiaStateCSV {
 
     @CsvBindByName(column = "StateCode")
     public int stateCode;
-}
 
+}
