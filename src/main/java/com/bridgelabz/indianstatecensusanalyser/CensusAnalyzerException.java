@@ -10,6 +10,6 @@ public class CensusAnalyzerException extends Exception {
     }
 
     enum ExceptionType {
-        INCORRECT_DELIMETEREXCEPTION;
+        INCORRECT_HEADEREXCEPTION;
     }
 }
