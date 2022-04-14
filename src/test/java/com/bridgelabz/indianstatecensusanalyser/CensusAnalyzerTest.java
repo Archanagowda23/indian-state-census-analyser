@@ -18,4 +18,17 @@ public class CensusAnalyzerTest {
             e.printStackTrace();
         }
     }
+
+    @Test
+    public void givenIndianCensusCSVFileReturnsInCorrectRecords() {
+        CensusAnalyzer censusAnalyzer = new CensusAnalyzer();
+
+        try {
+            int numOfRecord = censusAnalyzer.loadIndiaCensusData(INDIA_CENSUS_CSV_PATH);
+            Assert.assertEquals(30, numOfRecord);
+
+        } catch (CensusAnalyzerException e) {
+            e.printStackTrace();
+        }
+    }
 }
