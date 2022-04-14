@@ -12,11 +12,14 @@ import java.util.stream.StreamSupport;
 public class CensusAnalyzer {
 
     public void loadIndiaCensusData(String csvPath) throws CensusAnalyzerException {
+
         try (Reader reader = Files.newBufferedReader(Paths.get(csvPath))) {
+
             Iterator<IndiaCensusCSV> censusCSVIterator = getCSVIterator(reader, IndiaCensusCSV.class);
             getCount(censusCSVIterator);
+
         } catch (Exception e) {
-            throw new CensusAnalyzerException(e.getMessage(), CensusAnalyzerException.ExceptionType.INCORRECT_DELIMETEREXCEPTION);
+            throw new CensusAnalyzerException(e.getMessage(), CensusAnalyzerException.ExceptionType.INCORRECT_HEADEREXCEPTION);
         }
     }
 
