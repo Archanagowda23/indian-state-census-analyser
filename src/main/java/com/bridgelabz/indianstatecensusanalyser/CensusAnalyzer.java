@@ -11,23 +11,28 @@ import java.util.stream.StreamSupport;
 
 public class CensusAnalyzer {
 
-    public int loadIndiaCensusData(String csvPath) throws CensusAnalyzerException {
-
+    public void loadIndiaCensusData(String csvPath) throws CensusAnalyzerException {
         try (Reader reader = Files.newBufferedReader(Paths.get(csvPath))) {
-            CsvToBeanBuilder<IndiaCensusCSV> csvCsvToBeanBuilder = new CsvToBeanBuilder<>(reader);
-            csvCsvToBeanBuilder.withType(IndiaCensusCSV.class);
-            csvCsvToBeanBuilder.withIgnoreLeadingWhiteSpace(true);
-            CsvToBean<IndiaCensusCSV> csvToBean = csvCsvToBeanBuilder.build();
-
-            Iterator<IndiaCensusCSV> censusCSVIterator = csvToBean.iterator();
-            Iterable<IndiaCensusCSV> csvIterator = () -> censusCSVIterator;
-            int numOfEntries = (int) StreamSupport.stream(csvIterator.spliterator(), true).count();
-            return numOfEntries;
-
-        } catch (IOException e) {
-            throw new CensusAnalyzerException(e.getMessage(), CensusAnalyzerException.ExceptionType.INCORRECT_FILE_TYPE);
-
+            Iterator<IndiaCensusCSV> censusCSVIterator = getCSVIterator(reader, IndiaCensusCSV.class);
+            getCount(censusCSVIterator);
+        } catch (Exception e) {
+            throw new CensusAnalyzerException(e.getMessage(), CensusAnalyzerException.ExceptionType.INCORRECT_DELIMETEREXCEPTION);
         }
+    }
 
+    //generic method
+    private <E> Iterator getCSVIterator(Reader reader, Class csvClass) {
+        CsvToBeanBuilder<E> csvCsvToBeanBuilder = new CsvToBeanBuilder<>(reader);
+        csvCsvToBeanBuilder.withType(csvClass);
+        csvCsvToBeanBuilder.withIgnoreLeadingWhiteSpace(true);
+        CsvToBean<E> csvToBean = csvCsvToBeanBuilder.build();
+        return csvToBean.iterator();
+    }
+
+    //generic method for count entries
+    private <E> int getCount(Iterator<E> censusCSVIterator) {
+        Iterable<E> csvIterator = () -> censusCSVIterator;
+        int numOfEntries = (int) StreamSupport.stream(csvIterator.spliterator(), true).count();
+        return numOfEntries;
     }
 }
