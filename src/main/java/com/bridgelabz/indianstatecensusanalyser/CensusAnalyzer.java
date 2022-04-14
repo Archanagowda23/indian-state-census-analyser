@@ -11,18 +11,15 @@ import java.util.stream.StreamSupport;
 
 public class CensusAnalyzer {
 
-    public void loadIndiaCensusData(String csvPath) throws CensusAnalyzerException {
-
+    public int loadIndiaStateCodeData(String csvPath) throws CensusAnalyzerException {
         try (Reader reader = Files.newBufferedReader(Paths.get(csvPath))) {
-
-            Iterator<IndiaCensusCSV> censusCSVIterator = getCSVIterator(reader, IndiaCensusCSV.class);
+            Iterator<IndiaStateCSV> censusCSVIterator = getCSVIterator(reader, IndiaStateCSV.class);
             getCount(censusCSVIterator);
-
         } catch (Exception e) {
-            throw new CensusAnalyzerException(e.getMessage(), CensusAnalyzerException.ExceptionType.INCORRECT_HEADEREXCEPTION);
+            throw new CensusAnalyzerException(e.getMessage(), CensusAnalyzerException.ExceptionType.CSV_FILE_PROBLEM);
         }
+        return 0;
     }
-
     //generic method
     private <E> Iterator getCSVIterator(Reader reader, Class csvClass) {
         CsvToBeanBuilder<E> csvCsvToBeanBuilder = new CsvToBeanBuilder<>(reader);
